@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "856865745322",
+    "firebase_url": "https://movieticket-b223a.firebaseio.com",
+    "project_id": "movieticket-b223a",
+    "storage_bucket": "movieticket-b223a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856865745322:android:da395bb8d8f2e8033a23d3",
+        "android_client_info": {
+          "package_name": "com.alvayonara.movieticket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856865745322-9bhh5h6vgflotia2mcosn149bj6bevkm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alvayonara.movieticket",
+            "certificate_hash": "194c0b45328f0ba742aa5affde010413f33b2acf"
+          }
+        },
+        {
+          "client_id": "856865745322-st3jlgk6485brtcu4a2e5m3o22092f4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIdTX4H28QVbTHXsPLHn6wGPxyTJOCSLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856865745322-st3jlgk6485brtcu4a2e5m3o22092f4u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
