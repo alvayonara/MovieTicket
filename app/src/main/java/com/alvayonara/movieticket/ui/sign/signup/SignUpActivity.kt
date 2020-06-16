@@ -11,6 +11,7 @@ import com.alvayonara.movieticket.ui.sign.signin.User
 import com.alvayonara.movieticket.utils.Preferences
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import org.w3c.dom.Text
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -89,7 +90,7 @@ class SignUpActivity : AppCompatActivity() {
                         preferences.setValues("name", userData.name.toString())
                         preferences.setValues("email", userData.email.toString())
                         preferences.setValues("url", "")
-                        preferences.setValues("balance", "0")
+                        preferences.setValues("balance", "")
 
                         finishAffinity()
 
