@@ -12,8 +12,8 @@
         android:title="@string/ticket" />
 
     <item
-        android:id="@+id/navigation_profile"
+        android:id="@+id/navigation_settings"
         android:icon="@drawable/menu_profile_selector"
-        android:title="@string/profile" />
+        android:title="@string/settings" />
 
 </menu>

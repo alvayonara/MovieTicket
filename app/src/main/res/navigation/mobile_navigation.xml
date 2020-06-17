@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_ticket" />
 
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.alvayonara.movieticket.ui.profile.ProfileFragment"
-        android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" />
+        android:id="@+id/navigation_settings"
+        android:name="com.alvayonara.movieticket.ui.settings.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

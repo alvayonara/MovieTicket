@@ -49,4 +49,7 @@
     <string name="my_wallet">My Wallet</string>
     <string name="my_history">My History</string>
     <string name="daftar_transaksi">Daftar Transaksi</string>
+    <string name="settings">Settings</string>
+    <string name="who_played">Who’s Played</string>
+    <string name="storyboard">Storyboard</string>
 </resources>

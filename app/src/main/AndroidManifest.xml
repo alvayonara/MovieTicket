@@ -2,35 +2,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.alvayonara.movieticket">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission-sdk-23 android:name="android.permission.INTERNET"/>
-    <uses-permission-sdk-23 android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission-sdk-23 android:name="android.permission.CAMERA"/>
-    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-feature android:name="android.hardware.camera"
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
 
     <application
-        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.noActionBar">
+        <activity android:name=".ui.chooseseat.ChooseSeatActivity"></activity>
         <activity android:name=".ui.detailmovie.DetailMovieActivity" />
         <activity android:name=".ui.home.HomeActivity" />
-        <activity android:name="com.alvayonara.movieticket.ui.sign.signup.SignUpPhotoscreenActivity" />
+        <activity android:name=".ui.sign.signup.SignUpPhotoscreenActivity" />
         <activity android:name=".ui.onboarding.OnboardingOneActivity" />
         <activity android:name=".ui.onboarding.OnboardingTwoActivity" />
         <activity android:name=".ui.onboarding.OnboardingThreeActivity" />
-        <activity android:name="com.alvayonara.movieticket.ui.sign.signin.SignInActivity" />
-        <activity android:name="com.alvayonara.movieticket.ui.sign.signup.SignUpActivity" />
+        <activity android:name=".ui.sign.signin.SignInActivity" />
+        <activity android:name=".ui.sign.signup.SignUpActivity" />
         <activity android:name=".ui.splashscreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,6 +40,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
