@@ -50,11 +50,13 @@ class DashboardFragment : Fragment() {
             convertCurrencyBalance(preferences.getValues("balance")!!.toDouble(), tv_balance)
         }
 
-        // Set profile photo
-        Glide.with(this)
-            .load(preferences.getValues("url"))
-            .apply(RequestOptions.circleCropTransform())
-            .into(iv_profile)
+        if (!preferences.getValues("url").isNullOrEmpty()){
+            // Set profile photo
+            Glide.with(this)
+                .load(preferences.getValues("url"))
+                .apply(RequestOptions.circleCropTransform())
+                .into(iv_profile)
+        }
 
         nowPlayingAdapter = NowPlayingAdapter()
         comingSoonAdapter = ComingSoonAdapter()
