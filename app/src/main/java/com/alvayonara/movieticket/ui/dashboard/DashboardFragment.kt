@@ -42,15 +42,24 @@ class DashboardFragment : Fragment() {
         // Initialize Shared Preferences
         preferences = Preferences(requireActivity())
 
+        initView(preferences)
+
+        // Get movies data from Firebase
+        getMoviesData()
+    }
+
+    private fun initView(preferences: Preferences) {
         // Set name value
         tv_name.text = preferences.getValues("name")
 
         // Convert balance to Rupiah
         if (!preferences.getValues("balance").isNullOrEmpty()) {
             convertCurrencyBalance(preferences.getValues("balance")!!.toDouble(), tv_balance)
+        } else {
+            tv_balance.text = "IDR 0"
         }
 
-        if (!preferences.getValues("url").isNullOrEmpty()){
+        if (!preferences.getValues("url").isNullOrEmpty()) {
             // Set profile photo
             Glide.with(this)
                 .load(preferences.getValues("url"))
@@ -60,15 +69,12 @@ class DashboardFragment : Fragment() {
 
         nowPlayingAdapter = NowPlayingAdapter()
         comingSoonAdapter = ComingSoonAdapter()
-
-        // Get movies data from Firebase
-        getMoviesData()
     }
 
     private fun convertCurrencyBalance(balance: Double, tvBalance: TextView) {
         val localeID = Locale("in", "ID")
         val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
-        tvBalance.text = (formatRupiah.format(balance))
+        tvBalance.text = "IDR " + (formatRupiah.format(balance))
     }
 
     private fun getMoviesData() {

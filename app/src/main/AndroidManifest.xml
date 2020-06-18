@@ -24,7 +24,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.noActionBar">
-        <activity android:name=".ui.chooseseat.ChooseSeatActivity"></activity>
+        <activity android:name=".ui.checkout.CheckoutActivity"></activity>
+        <activity android:name=".ui.chooseseat.ChooseSeatActivity" />
         <activity android:name=".ui.detailmovie.DetailMovieActivity" />
         <activity android:name=".ui.home.HomeActivity" />
         <activity android:name=".ui.sign.signup.SignUpPhotoscreenActivity" />

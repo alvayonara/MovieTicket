@@ -4,32 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlue"
-    tools:context=".ui.onboarding.OnboardingOneActivity">
+    android:background="@color/colorBlue">
 
     <Button
-        android:id="@+id/btn_home"
+        android:id="@+id/btn_purchase"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/shape_rectangle_pink"
-        android:text="@string/beli_tiket"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/purchase_ticket"
         android:textColor="@color/colorWhite"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat"
         android:gravity="center"
-        android:text="@string/pilih_bangku"
+        android:text="@string/choose_seat"
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -38,28 +40,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat"
+        tools:text="Avengers"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:text="Alita Battle" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -69,7 +69,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
         app:srcCompat="@drawable/ic_path" />
 
     <TextView
@@ -77,39 +77,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
-        android:text="Layar Bioskop"
-        android:textAllCaps="true"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/cinema_screen"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
     <LinearLayout
         android:id="@+id/ll_line"
+        android:padding="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
         android:orientation="horizontal"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_rectangle_booked"
             android:layout_weight="1"
-            android:src="@drawable/ic_rectangle_empty" />
+            android:layout_width="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="match_parent"/>
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:src="@drawable/ic_rectangle_booked"
             android:layout_weight="1"
-            android:src="@drawable/ic_rectangle_empty" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
 
         <TextView
             android:layout_width="0dp"
@@ -117,16 +118,19 @@
             android:layout_weight="2.5"
             android:gravity="center"
             android:text="A"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_rectangle_empty" />
+            android:src="@drawable/ic_rectangle_booked" />
 
         <ImageView
+            android:id="@+id/seat_a4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -135,10 +139,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_line2"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="16dp"
         android:orientation="horizontal"
         android:padding="10dp"
@@ -151,9 +156,61 @@
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_rectangle_empty" />
+            android:src="@drawable/ic_rectangle_booked" />
 
         <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_rectangle_booked" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="center"
+            android:text="B"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_rectangle_booked" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_rectangle_booked" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_line3"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_line2">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_rectangle_booked" />
+
+        <ImageView
+            android:id="@+id/seat_c2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -164,21 +221,76 @@
             android:layout_height="match_parent"
             android:layout_weight="2.5"
             android:gravity="center"
-            android:text="B"
-            android:textColor="@color/colorWhite" />
+            android:text="C"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_rectangle_empty" />
+            android:src="@drawable/ic_rectangle_booked" />
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:src="@drawable/ic_rectangle_booked" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_line4"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_line3">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_rectangle_booked" />
+
+        <ImageView
+            android:id="@+id/seat_d2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:src="@drawable/ic_rectangle_empty" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="center"
+            android:text="D"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_rectangle_booked" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_rectangle_booked" />
+
     </LinearLayout>
 
     <TextView
@@ -189,9 +301,12 @@
         android:layout_marginBottom="24dp"
         android:drawableLeft="@drawable/ic_rectangle_booked"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
         android:text="Booked"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/btn_home"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_purchase"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -202,9 +317,12 @@
         android:layout_marginBottom="24dp"
         android:drawableLeft="@drawable/ic_rectangle_empty"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
         android:text="Empty"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/btn_home"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_purchase"
         app:layout_constraintStart_toEndOf="@+id/textView18" />
 
     <TextView
@@ -215,9 +333,12 @@
         android:layout_marginBottom="24dp"
         android:drawableLeft="@drawable/ic_rectangle_selected"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
         android:text="Selected"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/btn_home"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_purchase"
         app:layout_constraintStart_toEndOf="@+id/textView19" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
