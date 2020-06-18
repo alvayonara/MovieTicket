@@ -54,9 +54,9 @@ class DashboardFragment : Fragment() {
 
         // Convert balance to Rupiah
         if (!preferences.getValues("balance").isNullOrEmpty()) {
-            convertCurrencyBalance(preferences.getValues("balance")!!.toDouble(), tv_balance)
+            convertCurrencyBalance(preferences.getValues("balance")!!.toDouble())
         } else {
-            tv_balance.text = "IDR 0"
+            tv_balance.text = getString(R.string.empty_balance)
         }
 
         if (!preferences.getValues("url").isNullOrEmpty()) {
@@ -71,10 +71,10 @@ class DashboardFragment : Fragment() {
         comingSoonAdapter = ComingSoonAdapter()
     }
 
-    private fun convertCurrencyBalance(balance: Double, tvBalance: TextView) {
+    private fun convertCurrencyBalance(balance: Double) {
         val localeID = Locale("in", "ID")
         val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
-        tvBalance.text = "IDR " + (formatRupiah.format(balance))
+        tv_balance.text = (formatRupiah.format(balance))
     }
 
     private fun getMoviesData() {

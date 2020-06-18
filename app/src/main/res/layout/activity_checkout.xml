@@ -7,30 +7,32 @@
     android:background="@color/colorBlue">
 
     <Button
-        android:id="@+id/btn_home"
+        android:id="@+id/btn_cancel_purchase"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/shape_rectangle_blue_grey"
-        android:text="@string/batalkan"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/cancel"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btn_purchase"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/shape_rectangle_pink"
-        android:text="@string/bayar_sekarang"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/purchase_now"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/btn_home"
+        app:layout_constraintBottom_toTopOf="@+id/btn_cancel_purchase"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
@@ -42,6 +44,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat"
         android:gravity="center"
         android:text="@string/checkout"
         android:textColor="@color/colorWhite"
@@ -52,7 +55,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/iv_back"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
@@ -67,6 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/when"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
@@ -81,6 +85,7 @@
         android:layout_marginTop="8dp"
         android:drawableLeft="@drawable/ic_calendar_today"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/datetime"
         android:textColor="@color/colorWhiteGrey"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,6 +99,7 @@
         android:layout_marginTop="8dp"
         android:drawableLeft="@drawable/ic_local_movies"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/cinema"
         android:textColor="@color/colorWhiteGrey"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,22 +111,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21"
-        tools:text="12 Aug, 10 AM" />
+        android:text="12 Aug, 10 AM" />
 
     <TextView
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView23"
-        tools:text="Depok Mall, Cinema 3" />
+        android:text="Depok Mall, Cinema 3" />
 
     <TextView
         android:id="@+id/textView26"
@@ -128,6 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/montserrat"
         android:text="Items"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
@@ -135,7 +144,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/rv_items_checkout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -151,11 +160,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/ewallet"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_items_checkout" />
 
     <TextView
         android:id="@+id/textView28"
@@ -163,17 +173,36 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/ic_account_balance_wallet"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/totalbalance"
         android:textColor="@color/colorWhiteGrey"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
     <TextView
-        android:id="@+id/textView29"
+        android:id="@+id/tv_insufficient_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/insufficient_balance"
+        android:textColor="@color/colorWhiteGrey"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+    <TextView
+        android:id="@+id/tv_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:textColor="@color/colorWhite"
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/colorGreen"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView28"

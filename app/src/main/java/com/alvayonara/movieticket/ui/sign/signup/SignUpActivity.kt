@@ -90,7 +90,7 @@ class SignUpActivity : AppCompatActivity() {
                         preferences.setValues("name", userData.name.toString())
                         preferences.setValues("email", userData.email.toString())
                         preferences.setValues("url", "")
-                        preferences.setValues("balance", "")
+                        preferences.setValues("balance", "500000")
 
                         finishAffinity()
 

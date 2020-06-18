@@ -8,6 +8,9 @@ import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.CheckoutEntity
 import com.alvayonara.movieticket.data.entity.MovieEntity
 import kotlinx.android.synthetic.main.row_item_checkout.view.*
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CheckoutAdapter : RecyclerView.Adapter<CheckoutAdapter.CheckoutViewHolder>() {
 
@@ -34,8 +37,20 @@ class CheckoutAdapter : RecyclerView.Adapter<CheckoutAdapter.CheckoutViewHolder>
     class CheckoutViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItem(checkout: CheckoutEntity) {
             with(itemView) {
-                tv_seat.text = checkout.seat
-                tv_price.text = checkout.price
+                // Recyclerview data conditional
+                // * If recyclerview data seat contains text "Total"
+                if (checkout.seat!!.startsWith("Total")) {
+                    tv_seat.text = checkout.seat
+                    tv_seat.setCompoundDrawables(null, null, null, null)
+                } else {
+                    // * Else if recyclerview data seat not contains text "Total"
+                    tv_seat.text = "Seat (${checkout.seat})"
+                }
+
+                // Convert currency ticket price to Rupiah
+                val localeID = Locale("in", "ID")
+                val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
+                tv_price.text = formatRupiah.format(checkout.price!!.toDouble())
             }
         }
     }

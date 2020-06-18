@@ -55,4 +55,10 @@
     <string name="choose_seat">Choose Seat</string>
     <string name="purchase_ticket">Purchase Ticket</string>
     <string name="cinema_screen">Cinema Screen</string>
+    <string name="cancel">Cancel</string>
+    <string name="purchase_now">Purchase Now</string>
+    <string name="insufficient_balance">Insufficient balance in your e-wallet\nto make a transaction</string>
+    <string name="empty_balance">IDR 0</string>
+    <string name="ticket_purchased">Tickets successfully purchased\nEnjoy the movie!</string>
+    <string name="see_ticket">See Ticket</string>
 </resources>

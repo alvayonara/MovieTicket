@@ -10,8 +10,10 @@ import com.alvayonara.movieticket.data.entity.MovieEntity
 import com.alvayonara.movieticket.data.entity.PlaysEntity
 import com.alvayonara.movieticket.ui.checkout.CheckoutActivity
 import com.alvayonara.movieticket.ui.checkout.CheckoutActivity.Companion.EXTRA_CHECKOUT
+import com.alvayonara.movieticket.ui.checkout.CheckoutActivity.Companion.EXTRA_MOVIE_CHECKOUT
 import com.alvayonara.movieticket.ui.detailmovie.DetailMovieActivity
 import kotlinx.android.synthetic.main.activity_choose_seat.*
+import java.io.Serializable
 import java.util.ArrayList
 
 class ChooseSeatActivity : AppCompatActivity() {
@@ -57,7 +59,7 @@ class ChooseSeatActivity : AppCompatActivity() {
                 initPurchaseTicket(totalPurchaseTicket)
 
                 // Delete seat data from ArrayList
-                dataList.remove(CheckoutEntity("A4, 50000"))
+                dataList.remove(CheckoutEntity("A4", "50000"))
             } else {
                 // If selecting this seat
 
@@ -74,7 +76,7 @@ class ChooseSeatActivity : AppCompatActivity() {
                 initPurchaseTicket(totalPurchaseTicket)
 
                 // Add seat data to ArrayList
-                dataList.add(CheckoutEntity("A4, 50000"))
+                dataList.add(CheckoutEntity("A4", "50000"))
             }
         }
 
@@ -85,14 +87,14 @@ class ChooseSeatActivity : AppCompatActivity() {
                 totalPurchaseTicket -= 1
                 initPurchaseTicket(totalPurchaseTicket)
 
-                dataList.remove(CheckoutEntity("C2, 50000"))
+                dataList.remove(CheckoutEntity("C2", "50000"))
             } else {
                 seat_c2.setImageResource(R.drawable.ic_rectangle_selected)
                 seatC2Availability = true
                 totalPurchaseTicket += 1
                 initPurchaseTicket(totalPurchaseTicket)
 
-                dataList.add(CheckoutEntity("C2, 50000"))
+                dataList.add(CheckoutEntity("C2", "50000"))
             }
         }
 
@@ -103,14 +105,14 @@ class ChooseSeatActivity : AppCompatActivity() {
                 totalPurchaseTicket -= 1
                 initPurchaseTicket(totalPurchaseTicket)
 
-                dataList.remove(CheckoutEntity("D2, 50000"))
+                dataList.remove(CheckoutEntity("D2", "50000"))
             } else {
                 seat_d2.setImageResource(R.drawable.ic_rectangle_selected)
                 seatD2Availability = true
                 totalPurchaseTicket += 1
                 initPurchaseTicket(totalPurchaseTicket)
 
-                dataList.add(CheckoutEntity("D2, 50000"))
+                dataList.add(CheckoutEntity("D2", "50000"))
             }
         }
 
@@ -120,7 +122,7 @@ class ChooseSeatActivity : AppCompatActivity() {
 
         btn_purchase.setOnClickListener {
             val intent = Intent(this@ChooseSeatActivity, CheckoutActivity::class.java).apply {
-                putExtra(EXTRA_MOVIE_DATA, data)
+                putExtra(EXTRA_MOVIE_CHECKOUT, movie)
                 putExtra(EXTRA_CHECKOUT, dataList)
             }
             startActivity(intent)

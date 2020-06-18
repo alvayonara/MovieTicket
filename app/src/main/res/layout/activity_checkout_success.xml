@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlue"
-    tools:context=".onboarding.OnboardingOneActivity">
+    android:background="@color/colorBlue">
 
     <Button
         android:id="@+id/btn_home"
@@ -15,6 +14,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/shape_rectangle_blue_grey"
+        android:fontFamily="@font/montserrat"
         android:text="@string/home"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,14 +22,15 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btn_ticket"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/shape_rectangle_pink"
-        android:text="@string/lihat_tike"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/see_ticket"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/btn_home"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/happy_watch"
         android:textColor="@color/colorWhite"
         android:textSize="30sp"
@@ -64,7 +66,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:text="Tiket telah berhasil dibeli\ndan selamat menikmati film"
+        android:fontFamily="@font/montserrat"
+        android:lineSpacingExtra="8sp"
+        android:text="@string/ticket_purchased"
+        android:textAlignment="center"
         android:textColor="@color/colorWhiteGrey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
