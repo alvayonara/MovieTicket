@@ -21,6 +21,7 @@ import com.alvayonara.movieticket.ui.detailmovie.DetailMovieActivity
 import com.alvayonara.movieticket.ui.ticket.TicketDetailActivity
 import com.alvayonara.movieticket.ui.ticket.TicketDetailActivity.Companion.EXTRA_TICKET
 import com.alvayonara.movieticket.utils.Preferences
+import com.alvayonara.movieticket.utils.ToolbarConfig
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.activity_checkout.tv_balance
 import kotlinx.android.synthetic.main.fragment_dashboard.*
@@ -47,6 +48,8 @@ class CheckoutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
 
+        initToolbar()
+
         // Initialize Shared Preferences
         preferences = Preferences(this)
 
@@ -55,6 +58,10 @@ class CheckoutActivity : AppCompatActivity() {
         val dataList = intent.getSerializableExtra(EXTRA_CHECKOUT) as ArrayList<CheckoutEntity>
 
         initView(movie, dataList)
+    }
+
+    private fun initToolbar() {
+        ToolbarConfig.setDefaultStatusBarColor(this)
     }
 
     private fun initView(movie: MovieEntity, dataList: ArrayList<CheckoutEntity>) {

@@ -12,6 +12,7 @@ import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.MovieEntity
 import com.alvayonara.movieticket.ui.dashboard.ComingSoonAdapter.Companion.TYPE_COMING_SOON
 import com.alvayonara.movieticket.utils.Preferences
+import com.alvayonara.movieticket.utils.ToolbarConfig
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.*

@@ -12,6 +12,7 @@ import com.alvayonara.movieticket.ui.checkout.CheckoutActivity
 import com.alvayonara.movieticket.ui.checkout.CheckoutActivity.Companion.EXTRA_CHECKOUT
 import com.alvayonara.movieticket.ui.checkout.CheckoutActivity.Companion.EXTRA_MOVIE_CHECKOUT
 import com.alvayonara.movieticket.ui.detailmovie.DetailMovieActivity
+import com.alvayonara.movieticket.utils.ToolbarConfig
 import kotlinx.android.synthetic.main.activity_choose_seat.*
 import java.io.Serializable
 import java.util.ArrayList
@@ -34,10 +35,16 @@ class ChooseSeatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_seat)
 
+        initToolbar()
+
         // Parcelable extra from previous activity
         val movie = intent.getParcelableExtra(EXTRA_MOVIE_DATA) as MovieEntity
 
         initView(movie)
+    }
+
+    private fun initToolbar() {
+        ToolbarConfig.setDefaultStatusBarColor(this)
     }
 
     private fun initView(movie: MovieEntity) {

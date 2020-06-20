@@ -10,6 +10,7 @@ import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.ui.home.HomeActivity
 import com.alvayonara.movieticket.ui.sign.signup.SignUpActivity
 import com.alvayonara.movieticket.utils.Preferences
+import com.alvayonara.movieticket.utils.ToolbarConfig
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -25,6 +26,8 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+
+        initToolbar()
 
         // Initialize Firebase
         mDatabase = FirebaseDatabase.getInstance().getReference("user")
@@ -60,6 +63,10 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun initToolbar() {
+        ToolbarConfig.setDefaultStatusBarColor(this)
     }
 
     private fun checkLoginStatus() {

@@ -12,6 +12,7 @@ import com.alvayonara.movieticket.ui.chooseseat.ChooseSeatActivity
 import com.alvayonara.movieticket.ui.chooseseat.ChooseSeatActivity.Companion.EXTRA_MOVIE_DATA
 import com.alvayonara.movieticket.ui.dashboard.NowPlayingAdapter
 import com.alvayonara.movieticket.ui.dashboard.PlaysAdapter
+import com.alvayonara.movieticket.utils.ToolbarConfig
 import com.bumptech.glide.Glide
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_detail_movie.*
@@ -33,6 +34,8 @@ class DetailMovieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
+        initToolbar()
+
         // Parcelable extra from previous activity
         val movie = intent.getParcelableExtra(EXTRA_MOVIE) as MovieEntity
 
@@ -46,6 +49,10 @@ class DetailMovieActivity : AppCompatActivity() {
         initView(movie)
 
         getPlaysData()
+    }
+
+    private fun initToolbar() {
+        ToolbarConfig.setTransparentStatusBar(this)
     }
 
     private fun initView(movie: MovieEntity) {

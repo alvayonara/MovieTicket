@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.ui.home.HomeActivity
 import com.alvayonara.movieticket.utils.Preferences
+import com.alvayonara.movieticket.utils.ToolbarConfig
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -35,10 +36,20 @@ class SignUpPhotoscreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_photoscreen)
 
+        initToolbar()
+
         preferences = Preferences(this)
 
         mStorageRef = FirebaseStorage.getInstance().reference
 
+        initView(preferences)
+    }
+
+    private fun initToolbar() {
+        ToolbarConfig.setDefaultStatusBarColor(this)
+    }
+
+    private fun initView(preferences: Preferences) {
         tv_hello.text = "Selamat Datang\n" + intent.getStringExtra("name")
 
         iv_add.setOnClickListener {

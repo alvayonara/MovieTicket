@@ -7,6 +7,7 @@ import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.CheckoutEntity
 import com.alvayonara.movieticket.data.entity.MovieEntity
 import com.alvayonara.movieticket.ui.detailmovie.DetailMovieActivity
+import com.alvayonara.movieticket.utils.ToolbarConfig
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail_ticket.*
 
@@ -22,10 +23,16 @@ class TicketDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_ticket)
 
+        initToolbar()
+
         // Parcelable extra from previous activity
         val movie = intent.getParcelableExtra(EXTRA_TICKET) as MovieEntity
 
         initView(movie)
+    }
+
+    private fun initToolbar() {
+        ToolbarConfig.setDefaultStatusBarColor(this)
     }
 
     private fun initView(movie: MovieEntity) {
