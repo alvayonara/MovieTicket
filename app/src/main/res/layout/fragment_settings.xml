@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:drawableLeft="@drawable/ic_account"
+        android:drawableStart="@drawable/ic_account"
         android:drawablePadding="10dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/edit_profile"
@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:drawableLeft="@drawable/ic_flag"
+        android:drawableStart="@drawable/ic_flag"
         android:drawablePadding="10dp"
         android:fontFamily="@font/montserrat"
         android:text="Change Language"
@@ -118,7 +118,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:drawableLeft="@drawable/ic_help"
+        android:drawableStart="@drawable/ic_help"
         android:drawablePadding="10dp"
         android:fontFamily="@font/montserrat"
         android:text="Help"
@@ -161,5 +161,32 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_language" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_help" />
+
+    <TextView
+        android:id="@+id/tv_sign_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_account"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Sign Out"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

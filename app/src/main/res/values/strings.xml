@@ -58,10 +58,11 @@
     <string name="cancel">Cancel</string>
     <string name="purchase_now">Purchase Now</string>
     <string name="insufficient_balance">Insufficient balance in your e-wallet\nto make a transaction</string>
-    <string name="empty_balance">IDR 0</string>
+    <string name="empty_balance">Rp0,00</string>
     <string name="ticket_purchased">Tickets successfully purchased\nEnjoy the movie!</string>
     <string name="see_ticket">See Ticket</string>
     <string name="todays">Todays</string>
     <string name="cinema_location">Transmart MX Mall, XXI</string>
     <string name="movie_date">22 June, 8 PM</string>
+    <string name="content_title">Successfully Purchased</string>
 </resources>

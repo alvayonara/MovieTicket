@@ -1,16 +1,25 @@
 package com.alvayonara.movieticket.ui.checkout
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Movie
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.CheckoutEntity
 import com.alvayonara.movieticket.data.entity.MovieEntity
 import com.alvayonara.movieticket.ui.chooseseat.ChooseSeatActivity.Companion.EXTRA_MOVIE_DATA
 import com.alvayonara.movieticket.ui.detailmovie.DetailMovieActivity
+import com.alvayonara.movieticket.ui.ticket.TicketDetailActivity
+import com.alvayonara.movieticket.ui.ticket.TicketDetailActivity.Companion.EXTRA_TICKET
 import com.alvayonara.movieticket.utils.Preferences
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.activity_checkout.tv_balance
@@ -28,6 +37,10 @@ class CheckoutActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_MOVIE_CHECKOUT = "extra_movie_checkout"
         const val EXTRA_CHECKOUT = "extra_checkout"
+
+        const val NOTIFICATION_ID = 1
+        const val CHANNEL_ID = "channel_01"
+        const val CHANNEL_NAME = "checkout ticket channel"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,6 +117,39 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun showTicketPurchasedNotification(movie: MovieEntity) {
+        val mNotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        // Notification click
+        val intent = Intent(this, TicketDetailActivity::class.java).putExtra(EXTRA_TICKET, movie)
+        val pendingIntent =
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        // Notification builder
+        val mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentIntent(pendingIntent)
+            .setSmallIcon(R.drawable.logo_mov)
+            .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.logo_notification))
+            .setContentTitle(resources.getString(R.string.content_title))
+            .setContentText("${movie.title} tickets successfully purchased!")
+            .setAutoCancel(true)
+
+        /*
+            For android Oreos and above it is necessary to add a notification channel
+        */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            channel.description = CHANNEL_NAME
+            mBuilder.setChannelId(CHANNEL_ID)
+            mNotificationManager.createNotificationChannel(channel)
+        }
+
+        val notification = mBuilder.build()
+
+        mNotificationManager.notify(NOTIFICATION_ID, notification)
     }
 }
