@@ -62,4 +62,6 @@
     <string name="ticket_purchased">Tickets successfully purchased\nEnjoy the movie!</string>
     <string name="see_ticket">See Ticket</string>
     <string name="todays">Todays</string>
+    <string name="cinema_location">Transmart MX Mall, XXI</string>
+    <string name="movie_date">22 June, 8 PM</string>
 </resources>
