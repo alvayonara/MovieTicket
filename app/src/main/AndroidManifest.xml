@@ -24,7 +24,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.noActionBar">
-        <activity android:name=".ui.checkout.CheckoutSuccessActivity"></activity>
+        <activity android:name=".ui.ticket.TicketDetailActivity"></activity>
+        <activity android:name=".ui.checkout.CheckoutSuccessActivity" />
         <activity android:name=".ui.checkout.CheckoutActivity" />
         <activity android:name=".ui.chooseseat.ChooseSeatActivity" />
         <activity android:name=".ui.detailmovie.DetailMovieActivity" />

@@ -9,13 +9,21 @@ import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.MovieEntity
 import com.alvayonara.movieticket.ui.detailmovie.DetailMovieActivity
 import com.alvayonara.movieticket.ui.detailmovie.DetailMovieActivity.Companion.EXTRA_MOVIE
+import com.alvayonara.movieticket.ui.ticket.TicketDetailActivity
+import com.alvayonara.movieticket.ui.ticket.TicketDetailActivity.Companion.EXTRA_TICKET
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.row_item_coming_soon.view.*
 
-class ComingSoonAdapter : RecyclerView.Adapter<ComingSoonAdapter.MovieViewHolder>() {
+class ComingSoonAdapter constructor(private val typeView: Int) :
+    RecyclerView.Adapter<ComingSoonAdapter.MovieViewHolder>() {
 
     private var listMovies = ArrayList<MovieEntity>()
+
+    companion object {
+        const val TYPE_COMING_SOON = 1
+        const val TYPE_TICKET = 2
+    }
 
     fun setMovies(movies: List<MovieEntity>?) {
         if (movies == null) return
@@ -33,10 +41,13 @@ class ComingSoonAdapter : RecyclerView.Adapter<ComingSoonAdapter.MovieViewHolder
     override fun getItemCount(): Int = listMovies.size
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) =
-        holder.bindItem(listMovies[position])
+        holder.bindItem(listMovies[position], typeView)
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindItem(movie: MovieEntity) {
+
+        private lateinit var intent: Intent
+
+        fun bindItem(movie: MovieEntity, typeView: Int) {
             with(itemView) {
                 tv_title.text = movie.title
                 tv_genre.text = movie.genre
@@ -46,10 +57,21 @@ class ComingSoonAdapter : RecyclerView.Adapter<ComingSoonAdapter.MovieViewHolder
                     .into(iv_poster_image)
 
                 itemView.setOnClickListener {
-                    val intent = Intent(context, DetailMovieActivity::class.java).putExtra(
-                        EXTRA_MOVIE,
-                        movie
-                    )
+                    intent = when (typeView) {
+                        TYPE_COMING_SOON -> {
+                            Intent(context, DetailMovieActivity::class.java).putExtra(
+                                EXTRA_MOVIE,
+                                movie
+                            )
+                        }
+                        TYPE_TICKET -> {
+                            Intent(context, TicketDetailActivity::class.java).putExtra(
+                                EXTRA_TICKET,
+                                movie
+                            )
+                        }
+                        else -> throw IllegalArgumentException("Invalid view type")
+                    }
                     context.startActivity(intent)
                 }
             }

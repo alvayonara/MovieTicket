@@ -61,4 +61,5 @@
     <string name="empty_balance">IDR 0</string>
     <string name="ticket_purchased">Tickets successfully purchased\nEnjoy the movie!</string>
     <string name="see_ticket">See Ticket</string>
+    <string name="todays">Todays</string>
 </resources>

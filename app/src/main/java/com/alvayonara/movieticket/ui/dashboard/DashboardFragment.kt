@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.MovieEntity
+import com.alvayonara.movieticket.ui.dashboard.ComingSoonAdapter.Companion.TYPE_COMING_SOON
 import com.alvayonara.movieticket.utils.Preferences
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -68,7 +69,7 @@ class DashboardFragment : Fragment() {
         }
 
         nowPlayingAdapter = NowPlayingAdapter()
-        comingSoonAdapter = ComingSoonAdapter()
+        comingSoonAdapter = ComingSoonAdapter(TYPE_COMING_SOON)
     }
 
     private fun convertCurrencyBalance(balance: Double) {

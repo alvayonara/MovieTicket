@@ -29,9 +29,8 @@ class PlaysAdapter : RecyclerView.Adapter<PlaysAdapter.PlaysViewHolder>() {
 
     override fun getItemCount(): Int = listPlays.size
 
-    override fun onBindViewHolder(holder: PlaysAdapter.PlaysViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PlaysViewHolder, position: Int) =
         holder.bindItem(listPlays[position])
-    }
 
     class PlaysViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItem(play: PlaysEntity) {
