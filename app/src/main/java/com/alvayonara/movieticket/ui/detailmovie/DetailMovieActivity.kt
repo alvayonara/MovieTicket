@@ -1,30 +1,28 @@
 package com.alvayonara.movieticket.ui.detailmovie
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.MovieEntity
-import com.alvayonara.movieticket.data.entity.PlaysEntity
 import com.alvayonara.movieticket.ui.chooseseat.ChooseSeatActivity
 import com.alvayonara.movieticket.ui.chooseseat.ChooseSeatActivity.Companion.EXTRA_MOVIE_DATA
-import com.alvayonara.movieticket.ui.dashboard.NowPlayingAdapter
 import com.alvayonara.movieticket.ui.dashboard.PlaysAdapter
 import com.alvayonara.movieticket.utils.ToolbarConfig
 import com.bumptech.glide.Glide
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_detail_movie.*
-import java.util.ArrayList
 
 class DetailMovieActivity : AppCompatActivity() {
 
     private lateinit var mDatabase: DatabaseReference
+    private lateinit var detailMovieViewModel: DetailMovieViewModel
 
     private lateinit var playsAdapter: PlaysAdapter
-
-    private var dataList = ArrayList<PlaysEntity>()
 
     companion object {
         const val EXTRA_MOVIE = "extra_movie"
@@ -44,21 +42,35 @@ class DetailMovieActivity : AppCompatActivity() {
             FirebaseDatabase.getInstance().getReference("Movie").child(movie.title.toString())
                 .child("play")
 
+        // Initialize View Model
+        detailMovieViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[DetailMovieViewModel::class.java]
+
         playsAdapter = PlaysAdapter()
 
-        initView(movie)
-
-        getPlaysData()
+        initView(movie, mDatabase, detailMovieViewModel)
     }
 
     private fun initToolbar() {
         ToolbarConfig.setTransparentStatusBar(this)
     }
 
-    private fun initView(movie: MovieEntity) {
+    private fun initView(
+        movie: MovieEntity,
+        mDatabase: DatabaseReference,
+        detailMovieViewModel: DetailMovieViewModel
+    ) {
         tv_title.text = movie.title
-        tv_rate.text = movie.rating
         tv_genre.text = movie.genre
+
+        if (movie.rating != "0") {
+            tv_rate.text = movie.rating
+        } else {
+            tv_rate.text = "n/a"
+        }
+
         tv_description.text = movie.description
 
         Glide.with(this)
@@ -77,28 +89,15 @@ class DetailMovieActivity : AppCompatActivity() {
                 )
             startActivity(intent)
         }
-    }
 
-    private fun getPlaysData() {
-        mDatabase.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d("Error get plays data: ", p0.message)
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                for (dataSnapshot in p0.children) {
-                    val play = dataSnapshot.getValue(PlaysEntity::class.java)
-
-                    dataList.add(play!!)
-                }
-
-                playsAdapter.setPlays(dataList)
-
-                with(rv_play) {
-                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = playsAdapter
-                }
-            }
+        detailMovieViewModel.getPlaysMovie(mDatabase).observe(this, Observer { credits ->
+            playsAdapter.setPlays(credits)
+            playsAdapter.notifyDataSetChanged()
         })
+
+        with(rv_play) {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = playsAdapter
+        }
     }
 }

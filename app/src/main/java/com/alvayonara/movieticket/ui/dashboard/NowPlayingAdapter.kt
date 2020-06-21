@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.alvayonara.movieticket.BuildConfig
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.MovieEntity
 import com.alvayonara.movieticket.ui.detailmovie.DetailMovieActivity

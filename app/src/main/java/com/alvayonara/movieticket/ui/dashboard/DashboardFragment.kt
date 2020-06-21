@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alvayonara.movieticket.R
+import androidx.lifecycle.Observer
 import com.alvayonara.movieticket.data.entity.MovieEntity
 import com.alvayonara.movieticket.ui.dashboard.ComingSoonAdapter.Companion.TYPE_COMING_SOON
 import com.alvayonara.movieticket.utils.Preferences
-import com.alvayonara.movieticket.utils.ToolbarConfig
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.*
@@ -24,6 +24,8 @@ class DashboardFragment : Fragment() {
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var preferences: Preferences
+
+    private lateinit var dashboardViewModel: DashboardViewModel
 
     private lateinit var nowPlayingAdapter: NowPlayingAdapter
     private lateinit var comingSoonAdapter: ComingSoonAdapter
@@ -44,13 +46,20 @@ class DashboardFragment : Fragment() {
         // Initialize Shared Preferences
         preferences = Preferences(requireActivity())
 
-        initView(preferences)
+        // Initialize View Model
+        dashboardViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[DashboardViewModel::class.java]
 
-        // Get movies data from Firebase
-        getMoviesData()
+        initView(preferences, mDatabase, dashboardViewModel)
     }
 
-    private fun initView(preferences: Preferences) {
+    private fun initView(
+        preferences: Preferences,
+        mDatabase: DatabaseReference,
+        dashboardViewModel: DashboardViewModel
+    ) {
         // Set name value
         tv_name.text = preferences.getValues("name")
 
@@ -71,44 +80,37 @@ class DashboardFragment : Fragment() {
 
         nowPlayingAdapter = NowPlayingAdapter()
         comingSoonAdapter = ComingSoonAdapter(TYPE_COMING_SOON)
+
+        dashboardViewModel.getNowPlayingMovies(mDatabase)
+            .observe(viewLifecycleOwner, Observer { movies ->
+                nowPlayingAdapter.setMovies(movies)
+                nowPlayingAdapter.notifyDataSetChanged()
+            })
+
+        dashboardViewModel.getUpcomingMovies(mDatabase)
+            .observe(viewLifecycleOwner, Observer { movies ->
+                comingSoonAdapter.setMovies(movies)
+                comingSoonAdapter.notifyDataSetChanged()
+            })
+
+        with(rv_now_playing) {
+            layoutManager = LinearLayoutManager(
+                requireActivity(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = nowPlayingAdapter
+        }
+
+        with(rv_coming_soon) {
+            layoutManager = LinearLayoutManager(requireActivity())
+            adapter = comingSoonAdapter
+        }
     }
 
     private fun convertCurrencyBalance(balance: Double) {
         val localeID = Locale("in", "ID")
         val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
         tv_balance.text = (formatRupiah.format(balance))
-    }
-
-    private fun getMoviesData() {
-        mDatabase.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d("Error get movies data: ", p0.message)
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                for (dataSnapshot in p0.children) {
-                    val movies = dataSnapshot.getValue(MovieEntity::class.java)
-
-                    dataList.add(movies!!)
-                }
-
-                nowPlayingAdapter.setMovies(dataList)
-                comingSoonAdapter.setMovies(dataList)
-
-                with(rv_now_playing) {
-                    layoutManager = LinearLayoutManager(
-                        requireActivity(),
-                        LinearLayoutManager.HORIZONTAL,
-                        false
-                    )
-                    adapter = nowPlayingAdapter
-                }
-
-                with(rv_coming_soon) {
-                    layoutManager = LinearLayoutManager(requireActivity())
-                    adapter = comingSoonAdapter
-                }
-            }
-        })
     }
 }

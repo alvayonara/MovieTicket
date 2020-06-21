@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.alvayonara.movieticket.BuildConfig
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.MovieEntity
 import com.alvayonara.movieticket.ui.detailmovie.DetailMovieActivity
@@ -51,7 +52,13 @@ class ComingSoonAdapter constructor(private val typeView: Int) :
             with(itemView) {
                 tv_title.text = movie.title
                 tv_genre.text = movie.genre
-                tv_rate.text = movie.rating
+
+                if (movie.rating != "0"){
+                    tv_rate.text = movie.rating
+                } else {
+                    tv_rate.text = "n/a"
+                }
+
                 Glide.with(context)
                     .load(movie.poster)
                     .into(iv_poster_image)

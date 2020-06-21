@@ -7,14 +7,11 @@ import android.view.View
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.CheckoutEntity
 import com.alvayonara.movieticket.data.entity.MovieEntity
-import com.alvayonara.movieticket.data.entity.PlaysEntity
 import com.alvayonara.movieticket.ui.checkout.CheckoutActivity
 import com.alvayonara.movieticket.ui.checkout.CheckoutActivity.Companion.EXTRA_CHECKOUT
 import com.alvayonara.movieticket.ui.checkout.CheckoutActivity.Companion.EXTRA_MOVIE_CHECKOUT
-import com.alvayonara.movieticket.ui.detailmovie.DetailMovieActivity
 import com.alvayonara.movieticket.utils.ToolbarConfig
 import kotlinx.android.synthetic.main.activity_choose_seat.*
-import java.io.Serializable
 import java.util.ArrayList
 
 class ChooseSeatActivity : AppCompatActivity() {

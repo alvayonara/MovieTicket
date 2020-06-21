@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.alvayonara.movieticket.BuildConfig
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.data.entity.PlaysEntity
 import com.bumptech.glide.Glide
@@ -37,10 +38,12 @@ class PlaysAdapter : RecyclerView.Adapter<PlaysAdapter.PlaysViewHolder>() {
             with(itemView) {
                 tv_name_play.text = play.name
 
-                Glide.with(context)
-                    .load(play.url)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(iv_poster_image)
+                if (play.url != ""){
+                    Glide.with(context)
+                        .load(play.url)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(iv_poster_image)
+                }
             }
         }
     }

@@ -80,5 +80,4 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_poster"
         tools:text="7" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@
     android:orientation="vertical">
 
     <ImageView
+        app:srcCompat="@drawable/user_photo_empty"
         android:id="@+id/iv_poster_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -27,6 +28,7 @@
         android:gravity="center"
         android:textColor="@color/colorWhite"
         android:textSize="12sp"
+        android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

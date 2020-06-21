@@ -58,4 +58,8 @@ dependencies {
     }
 
     implementation 'com.github.dhaval2404:imagepicker:1.7.1'
+
+    //architecture component
+    implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
 }
