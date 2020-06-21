@@ -51,7 +51,7 @@
         android:fontFamily="@font/montserrat"
         tools:text="Alva Yonara"
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
@@ -61,6 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
+        android:textSize="18sp"
         tools:text="alvayonara@gmail.com"
         android:textColor="@color/colorWhiteGrey"
         app:layout_constraintEnd_toEndOf="parent"

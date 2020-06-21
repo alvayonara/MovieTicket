@@ -20,4 +20,10 @@ class Preferences(context: Context) {
     fun getValues(key: String): String? {
         return sharedPref.getString(key, "")
     }
+
+    fun clearAllData() {
+        val editor: SharedPreferences.Editor = sharedPref.edit()
+        editor.clear()
+        editor.apply()
+    }
 }

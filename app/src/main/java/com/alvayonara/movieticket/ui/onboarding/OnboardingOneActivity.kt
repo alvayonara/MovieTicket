@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.ui.sign.signin.SignInActivity
 import com.alvayonara.movieticket.utils.Preferences
+import com.alvayonara.movieticket.utils.ToolbarConfig
 import kotlinx.android.synthetic.main.activity_onboarding_one.*
 
 class OnboardingOneActivity : AppCompatActivity() {
@@ -15,6 +16,8 @@ class OnboardingOneActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding_one)
+
+        initToolbar()
 
         // Initialize Shared Preferences
         preferences = Preferences(this)
@@ -26,15 +29,19 @@ class OnboardingOneActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btn_daftar.setOnClickListener {
+        btn_skip.setOnClickListener {
             // Set flag onboarding to 1 (skip onboarding) in Preferences
             preferences.setValues("onboarding", "1")
 
-            finishAffinity()
-
             val intent = Intent(this@OnboardingOneActivity, SignInActivity::class.java)
             startActivity(intent)
+
+            finish()
         }
+    }
+
+    private fun initToolbar() {
+        ToolbarConfig.setDefaultStatusBarColor(this)
     }
 
     private fun checkOnboardingStatus() {
@@ -42,11 +49,12 @@ class OnboardingOneActivity : AppCompatActivity() {
         // onboarding -> 1 (Onboarding skipped to SignInActivity)
         // onboarding -> null (launch from Onboarding)
         if (preferences.getValues("onboarding").equals("1")) {
-            finishAffinity()
 
             val intent = Intent(this@OnboardingOneActivity,
                 SignInActivity::class.java)
             startActivity(intent)
+
+            finish()
         }
     }
 }

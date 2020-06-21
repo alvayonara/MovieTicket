@@ -8,14 +8,15 @@
     tools:context=".ui.onboarding.OnboardingOneActivity">
 
     <Button
-        android:id="@+id/btn_home"
+        android:id="@+id/btn_next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/shape_rectangle_pink"
-        android:text="@string/lanjutkan"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/next"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/pre_sale"
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
@@ -51,6 +53,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat"
         android:gravity="center"
         android:text="@string/pre_sale_desc"
         android:textColor="@color/colorWhite"

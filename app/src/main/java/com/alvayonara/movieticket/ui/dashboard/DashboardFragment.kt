@@ -70,12 +70,22 @@ class DashboardFragment : Fragment() {
             tv_balance.text = getString(R.string.empty_balance)
         }
 
+        // Future updates
+        tv_balance.setOnClickListener {
+
+        }
+
         if (!preferences.getValues("url").isNullOrEmpty()) {
             // Set profile photo
             Glide.with(this)
                 .load(preferences.getValues("url"))
                 .apply(RequestOptions.circleCropTransform())
                 .into(iv_profile)
+        }
+
+        // Future updates
+        iv_profile.setOnClickListener {
+
         }
 
         nowPlayingAdapter = NowPlayingAdapter()

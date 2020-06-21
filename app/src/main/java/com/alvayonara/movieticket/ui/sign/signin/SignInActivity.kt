@@ -128,40 +128,4 @@ class SignInActivity : AppCompatActivity() {
             }
         })
     }
-
-//    private fun pushLogin(username: String, password: String) {
-//        mDatabase.child(username).addValueEventListener(object : ValueEventListener {
-//            override fun onCancelled(p0: DatabaseError) {
-//                Log.d("Error Login: ", p0.message)
-//            }
-//
-//            override fun onDataChange(p0: DataSnapshot) {
-//                val user = p0.getValue(User::class.java)
-//
-//                if (user == null) {
-//                    Toast.makeText(this@SignInActivity, "User not found!", Toast.LENGTH_LONG).show()
-//                } else {
-//                    if (user.password.equals(password)) {
-//
-//                        // Set value logged user information and login status to 1 (true)
-//                        preferences.setValues("status", "1")
-//                        preferences.setValues("username", user.username.toString())
-//                        preferences.setValues("password", user.password.toString())
-//                        preferences.setValues("name", user.name.toString())
-//                        preferences.setValues("email", user.email.toString())
-//                        preferences.setValues("url", user.url.toString())
-//                        preferences.setValues("balance", user.balance.toString())
-//
-//                        finishAffinity()
-//
-//                        val intent = Intent(this@SignInActivity, HomeActivity::class.java)
-//                        startActivity(intent)
-//                    } else {
-//                        Toast.makeText(this@SignInActivity, "Wrong password", Toast.LENGTH_LONG)
-//                            .show()
-//                    }
-//                }
-//            }
-//        })
-//    }
 }

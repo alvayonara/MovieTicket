@@ -42,6 +42,14 @@ class SignUpActivity : AppCompatActivity() {
         // Initialize Shared Preferences
         preferences = Preferences(this)
 
+        initView()
+    }
+
+    private fun initView() {
+        img_arrow_back.setOnClickListener {
+            finish()
+        }
+
         btn_sign_up.setOnClickListener {
             password = edt_password.text.trim().toString()
             name = edt_name.text.toString()
@@ -52,8 +60,16 @@ class SignUpActivity : AppCompatActivity() {
                     edt_email.error = "Email empty"
                     edt_email.requestFocus()
                 }
+                !isValidEmail(email) -> {
+                    edt_email.error = "Email not valid"
+                    edt_email.requestFocus()
+                }
                 TextUtils.isEmpty(password) -> {
-                    edt_password.error = "Password Empty"
+                    edt_password.error = "Password empty"
+                    edt_password.requestFocus()
+                }
+                password.length < 6 -> {
+                    edt_password.error = "Password minimum contain 6 character"
                     edt_password.requestFocus()
                 }
                 TextUtils.isEmpty(name) -> {
@@ -73,9 +89,10 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun initToolbar() {
-        ToolbarConfig.setDefaultStatusBarColor(this)
-    }
+    private fun initToolbar() = ToolbarConfig.setDefaultStatusBarColor(this)
+
+    private fun isValidEmail(email: CharSequence): Boolean =
+        android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     private fun registerAccount(user: User) {
         auth.createUserWithEmailAndPassword(user.email!!, user.password!!)
