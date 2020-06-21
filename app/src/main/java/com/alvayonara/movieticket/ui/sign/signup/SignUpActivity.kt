@@ -10,19 +10,22 @@ import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.ui.sign.signin.User
 import com.alvayonara.movieticket.utils.Preferences
 import com.alvayonara.movieticket.utils.ToolbarConfig
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.w3c.dom.Text
 
 class SignUpActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
+
     private lateinit var mDatabase: DatabaseReference
     private lateinit var preferences: Preferences
 
-    private lateinit var username: String
+    private lateinit var email: String
     private lateinit var password: String
     private lateinit var name: String
-    private lateinit var email: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,19 +36,21 @@ class SignUpActivity : AppCompatActivity() {
         // Initialize Firebase
         mDatabase = FirebaseDatabase.getInstance().getReference("user")
 
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance();
+
         // Initialize Shared Preferences
         preferences = Preferences(this)
 
         btn_sign_up.setOnClickListener {
-            username = edt_username.text.trim().toString()
             password = edt_password.text.trim().toString()
             name = edt_name.text.toString()
             email = edt_email.text.trim().toString()
 
             when {
-                TextUtils.isEmpty(username) -> {
-                    edt_username.error = "Username empty"
-                    edt_username.requestFocus()
+                TextUtils.isEmpty(email) -> {
+                    edt_email.error = "Email empty"
+                    edt_email.requestFocus()
                 }
                 TextUtils.isEmpty(password) -> {
                     edt_password.error = "Password Empty"
@@ -55,17 +60,12 @@ class SignUpActivity : AppCompatActivity() {
                     edt_name.error = "Name empty"
                     edt_name.requestFocus()
                 }
-                TextUtils.isEmpty(email) -> {
-                    edt_email.error = "Email empty"
-                    edt_email.requestFocus()
-                }
                 else -> {
                     val user = User()
 
-                    user.username = username
+                    user.email = email
                     user.password = password
                     user.name = name
-                    user.email = email
 
                     registerAccount(user)
                 }
@@ -77,43 +77,37 @@ class SignUpActivity : AppCompatActivity() {
         ToolbarConfig.setDefaultStatusBarColor(this)
     }
 
-    private fun registerAccount(userData: User) {
-        mDatabase.child(userData.username.toString())
-            .addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d("Error Register: ", p0.message)
-                }
+    private fun registerAccount(user: User) {
+        auth.createUserWithEmailAndPassword(user.email!!, user.password!!)
+            .addOnCompleteListener(this, OnCompleteListener { task ->
+                if (task.isSuccessful) {
 
-                override fun onDataChange(p0: DataSnapshot) {
-                    val user = p0.getValue(User::class.java)
+                    mDatabase.child(auth.uid.toString()).setValue(user)
 
-                    if (user == null) {
-                        mDatabase.child(userData.username.toString()).setValue(userData)
+                    // Set value logged user information and login status to 1 (true)
+                    preferences.setValues("status", "1")
+                    preferences.setValues("uid", auth.uid.toString())
+                    preferences.setValues("email", user.email.toString())
+                    preferences.setValues("password", user.password.toString())
+                    preferences.setValues("name", user.name.toString())
+                    preferences.setValues("url", "")
+                    preferences.setValues("balance", "")
 
-                        // Set value logged user information and login status to 1 (true)
-                        preferences.setValues("status", "1")
-                        preferences.setValues("username", userData.username.toString())
-                        preferences.setValues("password", userData.password.toString())
-                        preferences.setValues("name", userData.name.toString())
-                        preferences.setValues("email", userData.email.toString())
-                        preferences.setValues("url", "")
-                        preferences.setValues("balance", "500000")
+                    val intent = Intent(
+                        this@SignUpActivity,
+                        SignUpPhotoscreenActivity::class.java
+                    ).putExtra("name", user.name)
+                    startActivity(intent)
 
-                        finishAffinity()
-
-                        val intent = Intent(
-                            this@SignUpActivity,
-                            SignUpPhotoscreenActivity::class.java
-                        ).putExtra("name", userData.name)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(
-                            this@SignUpActivity,
-                            "Username already exist!",
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
-                    }
+                    finish()
+                } else {
+                    Log.d("errsign", task.exception.toString())
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        "Username already exist!",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
                 }
             })
     }

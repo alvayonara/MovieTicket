@@ -43,5 +43,9 @@ class SettingsFragment : Fragment() {
 
         tv_name.text = preferences.getValues("name")
         tv_email.text = preferences.getValues("email")
+
+        tv_sign_out.setOnClickListener {
+
+        }
     }
 }

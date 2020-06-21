@@ -15,6 +15,8 @@ import com.alvayonara.movieticket.utils.ToolbarConfig
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_sign_up_photoscreen.*
@@ -25,12 +27,10 @@ class SignUpPhotoscreenActivity : AppCompatActivity() {
     private var statusAdd: Boolean = false
     private lateinit var filePath: Uri
 
+    private lateinit var mDatabase: DatabaseReference
     private lateinit var mStorageRef: StorageReference
-    private lateinit var preferences: Preferences
 
-    companion object {
-        const val REQUEST_IMAGE_CAPTURE = 1
-    }
+    private lateinit var preferences: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +40,10 @@ class SignUpPhotoscreenActivity : AppCompatActivity() {
 
         preferences = Preferences(this)
 
+        // Initialize Firebase
+        mDatabase = FirebaseDatabase.getInstance().getReference("user")
+
+        // Initialize Firebase Storage
         mStorageRef = FirebaseStorage.getInstance().reference
 
         initView(preferences)
@@ -86,16 +90,21 @@ class SignUpPhotoscreenActivity : AppCompatActivity() {
 
                     // Set value preferences "url" image uploaded
                     ref.downloadUrl.addOnSuccessListener {
+
+                        // Insert url data to user
+                        mDatabase.child(preferences.getValues("uid").toString())
+                            .child("url").setValue(it.toString())
+
                         preferences.setValues("url", it.toString())
                     }
-
-                    finishAffinity()
 
                     val intent = Intent(
                         this@SignUpPhotoscreenActivity,
                         HomeActivity::class.java
                     )
                     startActivity(intent)
+
+                    finish()
                 }
                 // If upload photo fail
                 .addOnFailureListener { e ->
