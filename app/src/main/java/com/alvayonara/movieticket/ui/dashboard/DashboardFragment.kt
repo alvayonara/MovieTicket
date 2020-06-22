@@ -1,5 +1,6 @@
 package com.alvayonara.movieticket.ui.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,7 +13,11 @@ import com.alvayonara.movieticket.R
 import androidx.lifecycle.Observer
 import com.alvayonara.movieticket.data.entity.MovieEntity
 import com.alvayonara.movieticket.ui.dashboard.ComingSoonAdapter.Companion.TYPE_COMING_SOON
+import com.alvayonara.movieticket.ui.editprofile.EditProfileActivity
+import com.alvayonara.movieticket.ui.wallet.WalletActivity
 import com.alvayonara.movieticket.utils.Preferences
+import com.alvayonara.movieticket.utils.PreferencesKey.BALANCE
+import com.alvayonara.movieticket.utils.PreferencesKey.URL
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.*
@@ -52,40 +57,38 @@ class DashboardFragment : Fragment() {
             ViewModelProvider.NewInstanceFactory()
         )[DashboardViewModel::class.java]
 
-        initView(preferences, mDatabase, dashboardViewModel)
+        initView()
     }
 
-    private fun initView(
-        preferences: Preferences,
-        mDatabase: DatabaseReference,
-        dashboardViewModel: DashboardViewModel
-    ) {
+    private fun initView() {
         // Set name value
         tv_name.text = preferences.getValues("name")
 
         // Convert balance to Rupiah
-        if (!preferences.getValues("balance").isNullOrEmpty()) {
-            convertCurrencyBalance(preferences.getValues("balance")!!.toDouble())
+        if (!preferences.getValues(BALANCE).isNullOrEmpty()) {
+            convertCurrencyBalance(preferences.getValues(BALANCE)!!.toDouble())
         } else {
             tv_balance.text = getString(R.string.empty_balance)
         }
 
         // Future updates
         tv_balance.setOnClickListener {
-
+            val intent = Intent(requireActivity(), WalletActivity::class.java)
+            startActivity(intent)
         }
 
-        if (!preferences.getValues("url").isNullOrEmpty()) {
+        if (preferences.getValues(URL) != "") {
             // Set profile photo
             Glide.with(this)
-                .load(preferences.getValues("url"))
+                .load(preferences.getValues(URL))
                 .apply(RequestOptions.circleCropTransform())
                 .into(iv_profile)
         }
 
         // Future updates
         iv_profile.setOnClickListener {
-
+            val intent = Intent(requireActivity(), EditProfileActivity::class.java)
+            startActivity(intent)
         }
 
         nowPlayingAdapter = NowPlayingAdapter()

@@ -6,10 +6,20 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.ui.home.HomeActivity
 import com.alvayonara.movieticket.ui.sign.signup.SignUpActivity
 import com.alvayonara.movieticket.utils.Preferences
+import com.alvayonara.movieticket.utils.PreferencesKey.BALANCE
+import com.alvayonara.movieticket.utils.PreferencesKey.EMAIL
+import com.alvayonara.movieticket.utils.PreferencesKey.NAME
+import com.alvayonara.movieticket.utils.PreferencesKey.ON_BOARDING
+import com.alvayonara.movieticket.utils.PreferencesKey.PASSWORD
+import com.alvayonara.movieticket.utils.PreferencesKey.STATUS
+import com.alvayonara.movieticket.utils.PreferencesKey.UID
+import com.alvayonara.movieticket.utils.PreferencesKey.URL
 import com.alvayonara.movieticket.utils.ToolbarConfig
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +31,8 @@ class SignInActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var mDatabase: DatabaseReference
+
+    private lateinit var signInViewModel: SignInViewModel
 
     private lateinit var preferences: Preferences
 
@@ -39,14 +51,40 @@ class SignInActivity : AppCompatActivity() {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance();
 
+        signInViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[SignInViewModel::class.java]
+
         // Initialize Shared Preferences
         preferences = Preferences(this)
 
         // Set preferences onboarding to 1 (true)
-        preferences.setValues("onboarding", "1")
+        preferences.setValues(ON_BOARDING, "1")
 
         checkLoginStatus()
 
+        initView()
+    }
+
+    private fun initToolbar() {
+        ToolbarConfig.setDefaultStatusBarColor(this)
+    }
+
+    private fun checkLoginStatus() {
+        // Check preferences login status
+        // Status 1 -> Already logged in
+        // Status 0 -> Not logged in yet
+        if (preferences.getValues(STATUS).equals("1")) {
+
+            val intent = Intent(this@SignInActivity, HomeActivity::class.java)
+            startActivity(intent)
+
+            finish()
+        }
+    }
+
+    private fun initView() {
         btn_sign_in.setOnClickListener {
             email = edt_email.text.trim().toString()
             password = edt_password.text.trim().toString()
@@ -72,60 +110,31 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun initToolbar() {
-        ToolbarConfig.setDefaultStatusBarColor(this)
-    }
-
-    private fun checkLoginStatus() {
-        // Check preferences login status
-        // Status 1 -> Already logged in
-        // Status 0 -> Not logged in yet
-        if (preferences.getValues("status").equals("1")) {
-
-            val intent = Intent(this@SignInActivity, HomeActivity::class.java)
-            startActivity(intent)
-
-            finish()
-        }
-    }
-
     private fun performLogin(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, OnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    getDataLogin()
+        signInViewModel.setSignIn(mDatabase, auth, email, password)
+            .observe(this, Observer { signIn ->
+                if (signIn != null) {
+                    // Set value logged user information and login status to 1 (true)
+                    preferences.setValues(STATUS, "1")
+                    preferences.setValues(UID, auth.uid.toString())
+                    preferences.setValues(EMAIL, signIn.email.toString())
+                    preferences.setValues(PASSWORD, signIn.password.toString())
+                    preferences.setValues(NAME, signIn.name.toString())
+                    preferences.setValues(URL, signIn.url.toString())
+                    preferences.setValues(BALANCE, signIn.balance.toString())
+
+                    val intent = Intent(this@SignInActivity, HomeActivity::class.java)
+                    startActivity(intent)
+
+                    finish()
                 } else {
-                    Toast.makeText(this@SignInActivity, "Wrong password", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        this@SignInActivity,
+                        "Wrong email or password",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             })
-    }
-
-    private fun getDataLogin() {
-        mDatabase.child(auth.uid.toString()).addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d("Error Get Data: ", p0.message)
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                val user = p0.getValue(User::class.java)
-
-                if (user != null) {
-                    // Set value logged user information and login status to 1 (true)
-                    preferences.setValues("status", "1")
-                    preferences.setValues("uid", auth.uid.toString())
-                    preferences.setValues("email", user.email.toString())
-                    preferences.setValues("password", user.password.toString())
-                    preferences.setValues("name", user.name.toString())
-                    preferences.setValues("url", user.url.toString())
-                    preferences.setValues("balance", user.balance.toString())
-                }
-
-                val intent = Intent(this@SignInActivity, HomeActivity::class.java)
-                startActivity(intent)
-
-                finish()
-            }
-        })
     }
 }

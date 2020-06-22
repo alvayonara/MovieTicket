@@ -22,6 +22,8 @@ class DetailMovieActivity : AppCompatActivity() {
     private lateinit var mDatabase: DatabaseReference
     private lateinit var detailMovieViewModel: DetailMovieViewModel
 
+    private lateinit var movie: MovieEntity
+
     private lateinit var playsAdapter: PlaysAdapter
 
     companion object {
@@ -35,7 +37,7 @@ class DetailMovieActivity : AppCompatActivity() {
         initToolbar()
 
         // Parcelable extra from previous activity
-        val movie = intent.getParcelableExtra(EXTRA_MOVIE) as MovieEntity
+        movie = intent.getParcelableExtra(EXTRA_MOVIE) as MovieEntity
 
         // Initialize Firebase
         mDatabase =
@@ -50,7 +52,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
         playsAdapter = PlaysAdapter()
 
-        initView(movie, mDatabase, detailMovieViewModel)
+        initView()
     }
 
     private fun initToolbar() {
@@ -58,9 +60,6 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun initView(
-        movie: MovieEntity,
-        mDatabase: DatabaseReference,
-        detailMovieViewModel: DetailMovieViewModel
     ) {
         tv_title.text = movie.title
         tv_genre.text = movie.genre

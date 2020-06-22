@@ -1,16 +1,19 @@
 package com.alvayonara.movieticket.ui.sign.signup
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.alvayonara.movieticket.R
+import androidx.lifecycle.Observer
 import com.alvayonara.movieticket.ui.home.HomeActivity
 import com.alvayonara.movieticket.utils.Preferences
+import com.alvayonara.movieticket.utils.PreferencesKey.UID
+import com.alvayonara.movieticket.utils.PreferencesKey.URL
 import com.alvayonara.movieticket.utils.ToolbarConfig
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -30,6 +33,8 @@ class SignUpPhotoscreenActivity : AppCompatActivity() {
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mStorageRef: StorageReference
 
+    private lateinit var signUpViewModel: SignUpViewModel
+
     private lateinit var preferences: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,14 +51,19 @@ class SignUpPhotoscreenActivity : AppCompatActivity() {
         // Initialize Firebase Storage
         mStorageRef = FirebaseStorage.getInstance().reference
 
-        initView(preferences)
+        signUpViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[SignUpViewModel::class.java]
+
+        initView()
     }
 
     private fun initToolbar() {
         ToolbarConfig.setDefaultStatusBarColor(this)
     }
 
-    private fun initView(preferences: Preferences) {
+    private fun initView() {
         tv_hello.text = "Selamat Datang\n" + intent.getStringExtra("name")
 
         iv_add.setOnClickListener {
@@ -71,32 +81,14 @@ class SignUpPhotoscreenActivity : AppCompatActivity() {
         }
 
         btn_save.setOnClickListener {
-            val progressDialog = ProgressDialog(this)
-            progressDialog.setTitle("Uploading...")
-            progressDialog.show()
-
-            val ref = mStorageRef.child("images/" + UUID.randomUUID().toString())
-
-            ref.putFile(filePath)
-                // If upload photo success
-                .addOnSuccessListener {
-                    progressDialog.dismiss()
-
-                    Toast.makeText(
-                        this@SignUpPhotoscreenActivity,
-                        "Success Uploaded",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    // Set value preferences "url" image uploaded
-                    ref.downloadUrl.addOnSuccessListener {
-
-                        // Insert url data to user
-                        mDatabase.child(preferences.getValues("uid").toString())
-                            .child("url").setValue(it.toString())
-
-                        preferences.setValues("url", it.toString())
-                    }
+            signUpViewModel.setSignUpPhotoScreen(
+                mDatabase,
+                mStorageRef,
+                preferences.getValues(UID).toString(),
+                filePath
+            ).observe(this, Observer { url ->
+                if (url != null) {
+                    preferences.setValues(URL, url)
 
                     val intent = Intent(
                         this@SignUpPhotoscreenActivity,
@@ -104,38 +96,29 @@ class SignUpPhotoscreenActivity : AppCompatActivity() {
                     )
                     startActivity(intent)
 
-                    finish()
-                }
-                // If upload photo fail
-                .addOnFailureListener { e ->
-                    progressDialog.dismiss()
-
+                    finishAffinity()
+                } else {
                     Toast.makeText(
                         this@SignUpPhotoscreenActivity,
-                        "Upload Failed" + e.message,
+                        "Upload Failed",
                         Toast.LENGTH_SHORT
                     )
                         .show()
                 }
-                // Show upload photo progress in %
-                .addOnProgressListener { taskSnapshot ->
-                    val progress =
-                        100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
-
-                    progressDialog.setMessage("Uploaded " + progress.toInt() + "%")
-                }
+            })
         }
 
         btn_home.setOnClickListener {
-            finishAffinity()
-
             val intent = Intent(this@SignUpPhotoscreenActivity, HomeActivity::class.java)
             startActivity(intent)
+
+            finish()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         when (resultCode) {
             Activity.RESULT_OK -> {
                 //Image Uri will not be null for RESULT_OK
@@ -155,7 +138,7 @@ class SignUpPhotoscreenActivity : AppCompatActivity() {
                 Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
             }
             else -> {
-                Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
             }
         }
     }

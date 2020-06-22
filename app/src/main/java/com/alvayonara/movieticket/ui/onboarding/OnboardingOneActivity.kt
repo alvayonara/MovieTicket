@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.alvayonara.movieticket.R
 import com.alvayonara.movieticket.ui.sign.signin.SignInActivity
 import com.alvayonara.movieticket.utils.Preferences
+import com.alvayonara.movieticket.utils.PreferencesKey.ON_BOARDING
 import com.alvayonara.movieticket.utils.ToolbarConfig
 import kotlinx.android.synthetic.main.activity_onboarding_one.*
 
@@ -31,7 +32,7 @@ class OnboardingOneActivity : AppCompatActivity() {
 
         btn_skip.setOnClickListener {
             // Set flag onboarding to 1 (skip onboarding) in Preferences
-            preferences.setValues("onboarding", "1")
+            preferences.setValues(ON_BOARDING, "1")
 
             val intent = Intent(this@OnboardingOneActivity, SignInActivity::class.java)
             startActivity(intent)
@@ -48,7 +49,7 @@ class OnboardingOneActivity : AppCompatActivity() {
         // Check preferences Onboarding status
         // onboarding -> 1 (Onboarding skipped to SignInActivity)
         // onboarding -> null (launch from Onboarding)
-        if (preferences.getValues("onboarding").equals("1")) {
+        if (preferences.getValues(ON_BOARDING).equals("1")) {
 
             val intent = Intent(this@OnboardingOneActivity,
                 SignInActivity::class.java)
